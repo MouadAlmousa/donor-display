@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thank You Donors</title>
+  <style>
+    /* --- Page layout --- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: linear-gradient(to bottom right, #000000, #1a1a1a);
+      color: #fff;
+      font-family: "Segoe UI", Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-top: 30px;
+      color: #ffd700;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    }
+
+    /* --- Scrolling area --- */
+    #scroll-container {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    #names {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-size: 2em;
+      line-height: 1.8em;
+    }
+
+    #names div {
+      margin: 10px 0;
+      transition: transform 0.5s ease-out;
+    }
+
+    /* Optional glowing effect for names */
+    #names div:hover {
+      color: #ffd700;
+      text-shadow: 0 0 10px #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 Thank You to Our Generous Donors 🌟</h1>
+
+  <div id="scroll-container">
+    <div id="names">
+      <!-- 👇 Add or edit donor names here -->
+      <div>John Smith</div>
+      <div>Sarah Johnson</div>
+      <div>Michael Brown</div>
+      <div>Linda Davis</div>
+      <div>James Wilson</div>
+      <div>Patricia Garcia</div>
+      <div>Robert Martinez</div>
+      <div>Jennifer Taylor</div>
+      <div>William Anderson</div>
+      <div>Mary Thomas</div>
+      <div>Charles Jackson</div>
+      <div>Elizabeth White</div>
+      <div>Joseph Harris</div>
+      <div>Susan Clark</div>
+      <div>Christopher Lewis</div>
+      <div>Karen Robinson</div>
+      <div>Daniel Walker</div>
+      <div>Nancy Young</div>
+      <div>Matthew Hall</div>
+      <div>Lisa Allen</div>
+      <!-- etc. -->
+    </div>
+  </div>
+
+  <script>
+    const namesEl = document.getElementById('names');
+    const container = document.getElementById('scroll-container');
+    const containerHeight = container.clientHeight;
+    let y = containerHeight;
+
+    const speed = 0.8; // scroll speed (pixels per frame)
+
+    function animate() {
+      y -= speed;
+      if (y + namesEl.scrollHeight < 0) {
+        y = containerHeight;
+      }
+      namesEl.style.transform = `translateY(${y}px)`;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

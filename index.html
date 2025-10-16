@@ -1,143 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Thank You Donors</title>
+  <meta charset="UTF-8" />
+  <title>Honoring Our Donors — Continuous Scroll</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    /* --- Page layout --- */
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: linear-gradient(to bottom right, #000000, #1a1a1a);
-      color: #fff;
-      font-family: "Segoe UI", Arial, sans-serif;
-      overflow: hidden;
+    :root{
+      --speed-px-per-sec: 30; /* scroll speed in pixels/sec */
+      --gap-rows: 3;          /* number of empty rows for small gap */
+      --line-height: 2.2em;   /* height of each name row */
     }
 
-    h1 {
-      text-align: center;
-      font-size: 3em;
-      margin-top: 30px;
-      color: #ffd700;
-      text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow:hidden;
+      color:#fff;
     }
 
-    /* --- Scrolling area --- */
-    #scroll-container {
-      position: relative;
-      width: 100%;
-      height: 80vh;
-      overflow: hidden;
-      margin-top: 20px;
+    /* starry background */
+    body::before, body::after{
+      content:'';
+      position:absolute;
+      top:0; left:0;
+      width:200%; height:200%;
+      background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+      animation: stars 100s linear infinite;
+      pointer-events:none;
     }
 
-    #names {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      font-size: 2em;
-      line-height: 1.8em;
+    @keyframes stars {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-50%, -50%); }
     }
 
-    #names div {
-      margin: 10px 0;
-      transition: transform 0.5s ease-out;
+    header{
+      text-align:center;
+      font-size:2.8em;
+      margin:40px 0 20px;
+      text-shadow:0 0 20px rgba(255,255,255,0.7);
     }
 
-    /* Optional glowing effect for names */
-    #names div:hover {
-      color: #ffd700;
-      text-shadow: 0 0 10px #ffd700;
+    #viewport{
+      height:78vh;
+      width:100%;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+
+    .track{
+      width:100%;
+      max-width:900px;
+      position:relative;
+      animation-name: scroll;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform;
+    }
+
+    .block{
+      width:100%;
+      box-sizing:border-box;
+    }
+
+    .names {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:20px 10px;
+    }
+
+    .names .row{
+      height: var(--line-height);
+      line-height: calc(var(--line-height));
+      font-size:1.35rem;
+      margin: 6px 0;
+      opacity:0.95;
+    }
+
+    .row.blank{
+      opacity:0;
+      height: calc(var(--line-height)); 
+      margin:6px 0;
+      pointer-events:none;
+    }
+
+    /* footer thank you message */
+    footer{
+      position:fixed;
+      bottom:10px;
+      width:100%;
+      text-align:center;
+      font-size:1.25rem;
+      color:#ffd86b;
+      text-shadow:0 0 6px rgba(255,216,107,0.6);
+    }
+
+    @keyframes scroll {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    @media (max-width:700px){
+      header{ font-size:1.6rem; }
+      .names .row { font-size:1.05rem; }
+      :root{ --speed-px-per-sec: 24; }
+      footer{ font-size:1rem; }
     }
   </style>
 </head>
 <body>
-  <h1>🌟 Thanks to Our Generous Members 🌟</h1>
+  <header>🌠 Honoring Our Donors 🌠</header>
 
-  <div id="scroll-container">
-    <div id="names">
-      <!-- 👇 Add or edit donor names here -->
-      <div>Nimo A</div>
-      <div>Mohamed M</div>
-      <div>Murtuza S</div>
-      <div>Brahim D</div>
-      <div>Leyla M</div>
-      <div>Abdiqani M</div>
-      <div>RM Investments Group LLC</div>
-      <div>SAMI K</div>
-      <div>Abdiasis A</div>
-      <div>kamel h</div>
-      <div>Abdi M</div>
-      <div>Abdulqadir H</div>
-      <div>Suldan O</div>
-      <div>Abdurrahman B</div>
-      <div>ANUWAR U</div>
-      <div>Abdullahi S</div>
-      <div>Shafiqullah N</div>
-      <div>HAARON Y</div>
-      <div>Jameel &</div>
-      <div>Muhammad M</div>
-      <div>Mohammednur A</div>
-      <div>Barzan M</div>
-      <div>Awil A</div>
-      <div>Mohammed S</div>
-      <div>Kasifa L</div>
-      <div>Zafran S</div>
-      <div>Waleed K</div>
-      <div>Habib M</div>
-      <div>Hemn A</div>
-      <div>Muhammad B</div>
-      <div>Muhammad A</div>
-      <div>Nimiri K</div>
-      <div>Nasir A</div>
-      <div>abdurahman a</div>
-      <div>Jennifer M</div>
-      <div>Mohammed D</div>
-      <div>Liban M</div>
-      <div>Mayra W</div>
-      <div>Aweis F</div>
-      <div>Abdi A</div>
-      <div>Ibrahim A</div>
-      <div>Jamal E</div>
-      <div>Faseeh H</div>
-      <div>Gaydh A</div>
-      <div>Abdulrahman A</div>
-      <div>Mouad A</div>
-      <div>Mohamed A</div>
-      <div>Obidullah S</div>
-      <div>Mohammad Y</div>
-      <div>A N</div>
-      <div>Magdy E</div>
-      <div>Ahmad C</div>
-      <div>Yousif A</div>
-      <div>Hassan O</div>
+  <div id="viewport">
+    <div class="track" id="track">
+      <div class="block" id="block-template">
+        <div class="names" id="names-original">
+          <div class="row">Nimo A</div>
+          <div class="row">Mohamed M</div>
+          <div class="row">Murtuza S</div>
+          <div class="row">Brahim D</div>
+          <div class="row">Leyla M</div>
+          <div class="row">Abdiqani M</div>
+          <div class="row">RM Investments Group LLC</div>
+          <div class="row">SAMI K</div>
+          <div class="row">Abdiasis A</div>
+          <div class="row">kamel h</div>
+          <div class="row">Abdi M</div>
+          <div class="row">Abdulqadir H</div>
+          <div class="row">Suldan O</div>
+          <div class="row">Abdurrahman B</div>
+          <div class="row">ANUWAR U</div>
+          <div class="row">Abdullahi S</div>
+          <div class="row">Shafiqullah N</div>
+          <div class="row">HAARON Y</div>
+          <div class="row">Jameel &</div>
+          <div class="row">Muhammad M</div>
+          <div class="row">Mohammednur A</div>
+          <div class="row">Barzan M</div>
+          <div class="row">Awil A</div>
+          <div class="row">Mohammed S</div>
+          <div class="row">Kasifa L</div>
+          <div class="row">Zafran S</div>
+          <div class="row">Waleed K</div>
+          <div class="row">Habib M</div>
+          <div class="row">Hemn A</div>
+          <div class="row">Muhammad B</div>
+          <div class="row">Muhammad A</div>
+          <div class="row">Nimiri K</div>
+          <div class="row">Nasir A</div>
+          <div class="row">abdurahman a</div>
+          <div class="row">Jennifer M</div>
+          <div class="row">Mohammed D</div>
+          <div class="row">Liban M</div>
+          <div class="row">Mayra W</div>
+          <div class="row">Aweis F</div>
+          <div class="row">Abdi A</div>
+          <div class="row">Ibrahim A</div>
+          <div class="row">Jamal E</div>
+          <div class="row">Faseeh H</div>
+          <div class="row">Gaydh A</div>
+          <div class="row">Abdulrahman A</div>
+          <div class="row">Mouad A</div>
+          <div class="row">Mohamed A</div>
+          <div class="row">Obidullah S</div>
+          <div class="row">Mohammad Y</div>
+          <div class="row">A N</div>
+          <div class="row">Magdy E</div>
+          <div class="row">Ahmad C</div>
+          <div class="row">Yousif A</div>
+          <div class="row">Hassan O</div>
 
-      <!-- etc. -->
+        </div>
+      </div>
     </div>
   </div>
 
+  <footer>Thank you to all our generous donors! 🌟</footer>
+
   <script>
-    const namesEl = document.getElementById('names');
-    const container = document.getElementById('scroll-container');
-    const containerHeight = container.clientHeight;
-    let y = containerHeight;
+    (function(){
+      const gapCount = 3; // small blank gap rows
+      const speedPxPerSec = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--speed-px-per-sec')) || 30;
+      const track = document.getElementById('track');
+      const block = document.getElementById('block-template');
+      const namesOriginal = document.getElementById('names-original');
 
-    const speed = 0.8; // scroll speed (pixels per frame)
-
-    function animate() {
-      y -= speed;
-      if (y + namesEl.scrollHeight < 0) {
-        y = containerHeight;
+      // add blank rows
+      for(let i=0;i<gapCount;i++){
+        const blank = document.createElement('div');
+        blank.className = 'row blank';
+        blank.textContent = '';
+        namesOriginal.appendChild(blank);
       }
-      namesEl.style.transform = `translateY(${y}px)`;
-      requestAnimationFrame(animate);
-    }
 
-    animate();
+      // duplicate block for continuous loop
+      const clone = block.cloneNode(true);
+      track.appendChild(clone);
+
+      // compute animation duration
+      requestAnimationFrame(() => {
+        const distancePx = track.scrollHeight / 2;
+        const durationSec = Math.max(8, distancePx / speedPxPerSec);
+        track.style.animationDuration = durationSec + 's';
+      });
+    })();
   </script>
 </body>
 </html>
-
-
-

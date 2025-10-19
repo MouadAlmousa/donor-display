@@ -118,8 +118,10 @@
   </style>
 </head>
 <body>
+  <!-- Left Page -->
   <iframe id="left-frame" src="https://time.my-masjid.com/timingscreen/dfdfc08d-8784-4739-beaa-40ed6a63b852"></iframe>
 
+  <!-- Right Donor Scroll -->
   <div id="right-content">
     <header>🌠 Honoring Our Members 🌠</header>
 
@@ -136,20 +138,19 @@
 
   <script>
     async function loadDonors() {
-      const sheetID = "1lzGX34kBcDD9yHX4IKeQtPUFGSAJ34luw0O0p8cxpCo";
-      const url = `https://docs.google.com/spreadsheets/d/e/${sheetID}/gviz/tq?tqx=out:json`;
+      const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTb7e-YOwwyc-BfiBpQAPQHx23ZeOS4iExX1fe4NZMirEkRKP5ABr5mBHHdJzluHdKQ2e_RMOD-RdZu/pub?output=csv';
       const namesOriginal = document.getElementById('names-original');
 
       try {
-        const res = await fetch(url);
+        const res = await fetch(csvUrl);
         const text = await res.text();
-        const json = JSON.parse(text.substr(47).slice(0, -2));
-        const rows = json.table.rows;
+        const rows = text.trim().split('\n').slice(1); // Skip header row
 
         namesOriginal.innerHTML = '';
 
-        rows.forEach(r => {
-          const name = r.c[0]?.v;
+        rows.forEach(row => {
+          const columns = row.split(',');
+          const name = columns[0]?.trim();
           if (name) {
             const div = document.createElement('div');
             div.className = 'row';
@@ -170,17 +171,21 @@
       const track = document.getElementById('track');
       const namesOriginal = document.getElementById('names-original');
 
+      // Clear previous clones if any
       while (track.childElementCount > 1) track.removeChild(track.lastChild);
 
+      // Add blank rows
       for (let i = 0; i < gapCount; i++) {
         const blank = document.createElement('div');
         blank.className = 'row blank';
         namesOriginal.appendChild(blank);
       }
 
+      // Clone for infinite scroll
       const clone = namesOriginal.cloneNode(true);
       track.appendChild(clone);
 
+      // Compute animation duration
       requestAnimationFrame(() => {
         const distancePx = track.scrollHeight / 2;
         const durationSec = Math.max(8, distancePx / speedPxPerSec);
@@ -188,6 +193,7 @@
       });
     }
 
+    // Load donors immediately and refresh every 5 minutes
     loadDonors();
     setInterval(loadDonors, 5 * 60 * 1000);
   </script>

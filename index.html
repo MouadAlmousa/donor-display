@@ -2,33 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Honoring Our Donors — Continuous Scroll</title>
+  <title>Honoring Our Donors — Split Screen</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    :root{
-      --speed-px-per-sec: 30; /* scroll speed in pixels/sec */
-      --gap-rows: 3;          /* number of empty rows for small gap */
-      --line-height: 2.2em;   /* height of each name row */
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
     }
 
-    html,body{
-      height:100%;
-      margin:0;
+    /* Left side iframe */
+    #left-frame {
+      width: 85%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Right side donor page */
+    #right-content {
+      width: 15%;
+      height: 100%;
+      position: relative;
       background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: #fff;
       font-family: 'Montserrat', sans-serif;
-      overflow:hidden;
-      color:#fff;
+      overflow: hidden;
     }
 
-    /* starry background */
-    body::before, body::after{
-      content:'';
-      position:absolute;
-      top:0; left:0;
-      width:200%; height:200%;
+    /* Star background */
+    #right-content::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 200%; height: 200%;
       background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
       animation: stars 100s linear infinite;
-      pointer-events:none;
+      pointer-events: none;
+      opacity: 0.6;
     }
 
     @keyframes stars {
@@ -36,91 +50,83 @@
       to { transform: translate(-50%, -50%); }
     }
 
-    header{
-      text-align:center;
-      font-size:2.8em;
-      margin:40px 0 20px;
-      text-shadow:0 0 20px rgba(255,255,255,0.7);
+    header {
+      text-align: center;
+      font-size: 2.4em;
+      margin: 20px 0;
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+      position: relative;
+      z-index: 2;
     }
 
-    #viewport{
-      height:78vh;
-      width:100%;
-      position:relative;
-      overflow:hidden;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
+    #viewport {
+      height: calc(100% - 100px);
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 2;
     }
 
-    .track{
-      width:100%;
-      max-width:900px;
-      position:relative;
+    .track {
+      width: 100%;
+      max-width: 900px;
       animation-name: scroll;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
       will-change: transform;
-    }
-
-    .block{
-      width:100%;
-      box-sizing:border-box;
+      position: relative;
     }
 
     .names {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      padding:20px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 10px;
     }
 
-    .names .row{
-      height: var(--line-height);
-      line-height: calc(var(--line-height));
-      font-size:1.35rem;
+    .row {
+      font-size: 1.3rem;
+      line-height: 2.2em;
       margin: 6px 0;
-      opacity:0.95;
+      opacity: 0.95;
     }
 
-    .row.blank{
-      opacity:0;
-      height: calc(var(--line-height)); 
-      margin:6px 0;
-      pointer-events:none;
+    .row.blank {
+      opacity: 0;
+      pointer-events: none;
     }
 
-    /* footer thank you message */
-    footer{
-      position:fixed;
-      bottom:10px;
-      width:100%;
-      text-align:center;
-      font-size:1.25rem;
-      color:#ffd86b;
-      text-shadow:0 0 6px rgba(255,216,107,0.6);
+    footer {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.25rem;
+      color: #ffd86b;
+      text-shadow: 0 0 6px rgba(255,216,107,0.6);
+      z-index: 2;
     }
 
     @keyframes scroll {
-      0%   { transform: translateY(0); }
+      0% { transform: translateY(0); }
       100% { transform: translateY(-50%); }
-    }
-
-    @media (max-width:700px){
-      header{ font-size:1.6rem; }
-      .names .row { font-size:1.05rem; }
-      :root{ --speed-px-per-sec: 24; }
-      footer{ font-size:1rem; }
     }
   </style>
 </head>
 <body>
-  <header>🌠 Honoring Our Members 🌠</header>
+  <!-- Left Page -->
+  <iframe id="left-frame" src="https://time.my-masjid.com/timingscreen/dfdfc08d-8784-4739-beaa-40ed6a63b852"></iframe>
 
-  <div id="viewport">
-    <div class="track" id="track">
-      <div class="block" id="block-template">
+  <!-- Right Donor Scroll -->
+  <div id="right-content">
+    <header>🌠 Honoring Our Members 🌠</header>
+
+    <div id="viewport">
+      <div class="track" id="track">
         <div class="names" id="names-original">
           <div class="row">Nimo A</div>
           <div class="row">Mohamed M</div>
@@ -176,70 +182,32 @@
           <div class="row">Ahmad C</div>
           <div class="row">Yousif A</div>
           <div class="row">Hassan O</div>
-          <div class="row">ABURAS M</div>
-          <div class="row">AHMED A</div>
-          <div class="row">NIMER M</div>
-          <div class="row">OMAR Y</div>
-          <div class="row">WEDELSHEIKH E</div>
-          <div class="row">DIAOUNE M</div>
-          <div class="row">JEYLANI A</div>
-          <div class="row">BOYKIN A</div>
-          <div class="row">ELSAYED M</div>
-          <div class="row">WEDELSHEIKH E</div>
-          <div class="row">AWODA E</div>
-          <div class="row">ALI H</div>
-          <div class="row">ABURAS M</div>
-          <div class="row">ADAM F</div>
-          <div class="row">ALBAHRA A</div>
-          <div class="row">LOUNGE U</div>
-          <div class="row">BOYKIN A</div>
-          <div class="row">AHMMED M</div>
-          <div class="row">LLC NGH LOGISTICS</div>
-          <div class="row">SHEIKHUNA M</div>
-          <div class="row">FAQI J</div>
-          <div class="row">SAID A</div>
-          <div class="row">SALHI M</div>
-          <div class="row">MOHAMED G</div>
-          <div class="row">FAQI M</div>
-          <div class="row">NUUR A</div>
-          <div class="row">ISSA F</div>
-          <div class="row">AHMED O</div>
-          <div class="row">TRANSP J</div>
-          <div class="row">SYED A</div>
-          <div class="row">TAREY M</div>
-          <div class="row">ALI A</div>
-          <div class="row">MOHAMED O</div>
-          <div class="row">AWODA E</div>
-          <div class="row">MOHAMED H</div>
-          <div class="row">ELMI M</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <footer>Thank you to all our generous members! 🌟</footer>
+    <footer>Thank you to all our generous members! 🌟</footer>
+  </div>
 
   <script>
     (function(){
-      const gapCount = 3; // small blank gap rows
-      const speedPxPerSec = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--speed-px-per-sec')) || 30;
+      const gapCount = 3;
+      const speedPxPerSec = 30;
       const track = document.getElementById('track');
-      const block = document.getElementById('block-template');
       const namesOriginal = document.getElementById('names-original');
 
-      // add blank rows
-      for(let i=0;i<gapCount;i++){
+      // Add blank rows
+      for(let i = 0; i < gapCount; i++) {
         const blank = document.createElement('div');
         blank.className = 'row blank';
-        blank.textContent = '';
         namesOriginal.appendChild(blank);
       }
 
-      // duplicate block for continuous loop
-      const clone = block.cloneNode(true);
+      // Clone for infinite scroll
+      const clone = namesOriginal.cloneNode(true);
       track.appendChild(clone);
 
-      // compute animation duration
+      // Compute animation duration
       requestAnimationFrame(() => {
         const distancePx = track.scrollHeight / 2;
         const durationSec = Math.max(8, distancePx / speedPxPerSec);
@@ -249,6 +217,3 @@
   </script>
 </body>
 </html>
-
-
-
